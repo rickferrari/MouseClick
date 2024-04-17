@@ -25,24 +25,25 @@ def main():
 
         # Solicitar a quantidade de repetições desejadas
         repetitions = input("Digite o número de repetições desejadas (padrão: 1000): ")
-        if repetitions.strip() == "":
-            repetitions = 1000
-        else:
-            repetitions = int(repetitions)
-        
+        repetitions = int(repetitions.strip()) if repetitions.strip() else 1000
+
         print("Iniciando cliques nos pontos capturados...")
         # Solicitar que seja pressionada uma tecla para continuar
         input("Pressione qualquer tecla para continuar...")
         
         # Executar os cliques
-        for _ in range(repetitions):
-            click_points.click_points(points, click_interval)
-            click_points.click_specific_point_Yx(specific_point, click_interval, qty_points)
-            print("Aguarde {} minutos até a proxima rodada...".format(wait_time))
-            time.sleep(wait_time * 60)
+        run_clicks(points, specific_point, qty_points, click_interval, wait_time, repetitions)
 
     except Exception as e:
         print(f"Erro: {e}")
+
+def run_clicks(points, specific_point, qty_points, click_interval, wait_time, repetitions):
+    for i in range(1, repetitions + 1):
+        print(f"Rodada {i}:")
+        click_points.click_points(points, click_interval)
+        click_points.click_specific_point_Yx(specific_point, click_interval, qty_points)
+        print(f"Aguarde {wait_time} minutos até a próxima rodada...")
+        time.sleep(wait_time * 60)
 
 if __name__ == "__main__":
     main()
